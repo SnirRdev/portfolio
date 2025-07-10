@@ -10,13 +10,13 @@ image:
   pullPolicy: IfNotPresent                   # מדיניות משיכת התמונה (Always, IfNotPresent, Never)
 
 service:
-  type: ClusterIP # סוג ה-Service (ClusterIP, NodePort, LoadBalancer)
+  type: LoadBalancer # סוג ה-Service (ClusterIP, NodePort, LoadBalancer)
   port: 8080      # הפורט שה-Service יחשוף (צריך להתאים ל-containerPort של האפליקציה)
 
 ingress:
   enabled: true             # האם להפעיל את ה-Ingress
   className: nginx          # שם ה-Ingress Controller (לדוגמה: nginx, traefik)
-  host: myapp.example.com   # הדומיין שדרכו תרצה לגשת לאפליקציה (החלף בדומיין שלך)
+  host: myapp.portfolio.com   # הדומיין שדרכו תרצה לגשת לאפליקציה (החלף בדומיין שלך)
   annotations: {}           # כאן ניתן להוסיף annotations ספציפיים לבקר ה-Ingress
   # לדוגמה, עבור NGINX Ingress Controller:
   # annotations:
