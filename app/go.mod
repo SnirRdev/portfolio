@@ -1,3 +1,3 @@
-module github.com/SnirRdev/portfolio
+module github.com/SnirRdev/portfolio/app
 
 go 1.22
