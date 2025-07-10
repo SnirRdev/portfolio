@@ -2,9 +2,13 @@ name: CI-CD
 
 on:
   push:
-    branches: ['*']
+    branches: 
+      - main
+      - k8s
   pull_request:
-    branches: ['*']
+    branches: 
+      - main
+      - k8s
 
 
 jobs:
