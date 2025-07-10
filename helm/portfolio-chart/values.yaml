@@ -1,0 +1,37 @@
+# values.yaml
+# קובץ זה מכיל את ערכי ברירת המחדל עבור ה-Helm Chart שלך.
+# ניתן לדרוס ערכים אלה בעת התקנת הצ'ארט באמצעות `helm install --set key=value`.
+
+replicaCount: 3 # מספר הפודים של האפליקציה
+
+image:
+  repository: your-dockerhub-username/my-app # החלף בשם המשתמש שלך ב-Docker Hub ובשם התמונה
+  tag: 1.0.0                                 # גרסת תמונת הדוקר של האפליקציה (ודא שתואם למה שבנית ודחפת)
+  pullPolicy: IfNotPresent                   # מדיניות משיכת התמונה (Always, IfNotPresent, Never)
+
+service:
+  type: ClusterIP # סוג ה-Service (ClusterIP, NodePort, LoadBalancer)
+  port: 8080      # הפורט שה-Service יחשוף (צריך להתאים ל-containerPort של האפליקציה)
+
+ingress:
+  enabled: true             # האם להפעיל את ה-Ingress
+  className: nginx          # שם ה-Ingress Controller (לדוגמה: nginx, traefik)
+  host: myapp.example.com   # הדומיין שדרכו תרצה לגשת לאפליקציה (החלף בדומיין שלך)
+  annotations: {}           # כאן ניתן להוסיף annotations ספציפיים לבקר ה-Ingress
+  # לדוגמה, עבור NGINX Ingress Controller:
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
+
+# הגדרות משאבים לפודים (CPU/Memory)
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# הגדרות נוספות (ניתן להוסיף לפי הצורך)
+nodeSelector: {}
+tolerations: []
+affinity: {}
