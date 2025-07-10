@@ -7,14 +7,14 @@ on:
     branches: ['*']
 
 env:
-  IMAGE_NAME: SnirRdev/go-app #once i have will update
+  IMAGE_NAME: SnirRdev/portfolio #once i have will update
   K8S_MANIFEST: ./k8s/deployment.yaml
   docker_username: ${{ secrets.DOCKER_USERNAME }}
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
   
 
 jobs:
-  test:
+  test-code:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,19 +25,25 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.22'
+    - name: install dependencies and verify
+      run: | 
+        go mod download
+        go mod tidy
+        go mod verify
+
 
     - name: Build
-      run: go build ./app
+      run: go build -v ./cmd
 
     - name: Run tests
-      run: go test ./app
+      run: go test ./...
 
     - name: Lint
-      run: go vet ./app
+      run: go vet ./...
 
-  build:
+  build-image:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test-code
     steps:
     - name: login to dockerhub
       uses: docker/login-action@v3
