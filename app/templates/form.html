@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Portfolio Form</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>{{if .Name}}Edit{{else}}Build{{end}} Your Portfolio</h1>
+    <form action="/generate" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" required value="{{.Name}}" />
+
+        <label>Bio:</label>
+        <textarea name="bio" required>{{.Bio}}</textarea>
+
+        <label>Skills:</label>
+        <input type="text" name="skill1" placeholder="Skill 1" value="{{if ge (len .Skills) 1}}{{index .Skills 0}}{{end}}" />
+        <input type="text" name="skill2" placeholder="Skill 2" value="{{if ge (len .Skills) 2}}{{index .Skills 1}}{{end}}" />
+        <input type="text" name="skill3" placeholder="Skill 3" value="{{if ge (len .Skills) 3}}{{index .Skills 2}}{{end}}" />
+
+        <input type="submit" value="Save Portfolio" />
+    </form>
+
+    <div class="nav-links">
+      <a href="/json">📝 View all portfolios in JSON format</a>
+    </div>
+  </div>
+</body>
+</html>
