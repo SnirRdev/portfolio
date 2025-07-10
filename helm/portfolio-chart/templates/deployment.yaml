@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment  # שם ה-Deployment
+  labels:
+    app: main           # לייבל שניתן להשתמש בו לזיהוי
+spec:
+  replicas: 3             # מספר הפודים (Pods) שנרצה להריץ
+  selector:
+    matchLabels:
+      app: main         # חייב להתאים ללייבל של הפודים
+  template:
+    metadata:
+      labels:
+        app: main       # לייבל עבור הפוד
+    spec:
+      containers:
+      - name: main-container # שם הקונטיינר
+        image: nginx:latest  # תמונת הדוקר של האפליקציה (ניתן לשנות)
+        ports:
+        - containerPort: 8080   # הפורט שהאפליקציה מאזינה לו בתוך הקונטיינר
