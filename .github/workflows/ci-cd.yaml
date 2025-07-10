@@ -9,8 +9,6 @@ on:
 env:
   IMAGE_NAME: SnirRdev/portfolio #once i have will update
   K8S_MANIFEST: ./k8s/deployment.yaml
-  docker_username: ${{ secrets.DOCKER_USERNAME }}
-  docker_password: ${{ secrets.DOCKER_PASSWORD }}
   
 
 jobs:
