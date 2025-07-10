@@ -12,10 +12,37 @@ on:
 
 env:
   IMAGE_NAME: portfolio
+  GO_VERSION: '1.22'
 
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+    
+    - name: Get dependencies
+      working-directory: ./app
+      run: go mod download
+    
+    - name: Run tests
+      working-directory: ./app
+      run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./app/coverage.txt
+        fail_ci_if_error: true
 
   build-image:
+    needs: test
     runs-on: ubuntu-latest
     environment: CI_CD
     steps:
@@ -25,7 +52,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.22'
+        go-version: ${{ env.GO_VERSION }}
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -43,11 +70,3 @@ jobs:
         file: ./app/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:latest
-    
-    
-        
-        
-      
-      
-
-    
