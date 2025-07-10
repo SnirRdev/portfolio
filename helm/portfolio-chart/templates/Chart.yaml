@@ -1,0 +1,6 @@
+# Chart.yaml
+apiVersion: v2
+name: portfolio-chart
+description: A Helm chart for my portfolio application
+version: 0.1.0
+appVersion: "1.0.0" # גרסת האפליקציה שלך
