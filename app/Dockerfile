@@ -1,10 +1,14 @@
 FROM golang:1.22-alpine
 
+RUN addgroup -S appuser && adduser -S appuser -G appuser
+
 WORKDIR /app
 
-COPY . .
+COPY --chown=appuser:appuser . /app
 
-RUN go build -o main main.go
+USER appuser
+# go will be replaced later
+RUN go build -o main main.go  
 
 EXPOSE 8080
 
