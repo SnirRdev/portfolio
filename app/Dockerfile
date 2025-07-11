@@ -1,4 +1,5 @@
 FROM golang:1.22-alpine
+#go will be replaced
 
 RUN addgroup -S appuser && adduser -S appuser -G appuser
 
