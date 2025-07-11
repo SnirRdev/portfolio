@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress                   
+metadata:
+  name: main-ingress         
+  annotations:
+    # לדוגמה, עבור NGINX Ingress Controller:
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: myapp.example.com     
+    http:
+      paths:
+      - path: /myapp/*                 
+        pathType: Prefix        
+        backend:
+          service:
+            name: my-app-service 
+            port:
+              number: 8080      # הפורט של ה-Service שאליו ה-Ingress יפנה
