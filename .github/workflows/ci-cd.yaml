@@ -61,3 +61,12 @@ jobs:
         file: ./Dockerfile # repo file path
         push: true
         tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:latest
+
+    - name: Save Docker version info to file
+      run: echo "${{ env.IMAGE_TAG }}" > docker-version.txt
+
+    - name: Upload Docker version as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: docker-version.txt
+        name: docker-version
