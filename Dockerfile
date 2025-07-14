@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-RUN addgroup -S appuser && adduser -S appuser -G appuser
+RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 WORKDIR /app
 
