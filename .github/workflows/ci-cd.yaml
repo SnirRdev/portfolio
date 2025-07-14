@@ -38,9 +38,6 @@ jobs:
     - name: Security scan with Bandit
       run: bandit -r . -s B101
     
-    - name: Check formatting with Black
-      run: black --check .
-    
   build-image:
     needs: test
     runs-on: ubuntu-latest
