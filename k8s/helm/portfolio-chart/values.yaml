@@ -1,25 +1,33 @@
-# Simple values for portfolio application
-
-# Container image
+# Image details
 image:
   repository: snirrdev/portfolio
-  tag: latest
+  tag: "1.0.3"  # Use Git SHA or version
 
-# Application settings
+# App-specific settings
 app:
   port: 8080
 
-# Service configuration
+# Kubernetes Deployment
+replicaCount: 2
+
+# Kubernetes Service
 service:
   type: ClusterIP
   port: 8080
 
-# Ingress (disabled by default for simplicity)
+# Ingress
 ingress:
-  enabled: false
-  host: portfolio.local
+  enabled: true
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: portfolio.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
 
-# Resource limits
+# Resource Limits
 resources:
   limits:
     cpu: 500m
@@ -27,6 +35,3 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
-
-# Number of replicas
-replicaCount: 2

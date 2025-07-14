@@ -6,9 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/SnirRdev/portfolio.git
-    targetRevision: HEAD
+    repoURL: https://github.com/portfolioTeamDevops/portfolio.git
+    targetRevision: main
     path: k8s/helm/portfolio-chart
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: portfolio
@@ -18,4 +21,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
+      - ApplyOutOfSyncOnly=true

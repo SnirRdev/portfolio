@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: portfolio-app
+  name: {{ .Chart.Name }}
   labels:
-    app: portfolio-app
+    app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: portfolio-app
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: portfolio-app
+        app: {{ .Chart.Name }}
     spec:
       containers:
-      - name: portfolio-app
+      - name:   {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.app.port }}

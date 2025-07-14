@@ -5,10 +5,12 @@ on:
     branches: 
       - main
       - k8s
+      - daniel-modernization
   pull_request:
     branches: 
       - main
       - k8s
+      - daniel-modernization
 
 env:
   IMAGE_NAME: portfolio
