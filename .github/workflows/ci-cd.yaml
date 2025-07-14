@@ -44,6 +44,24 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    
+    - name: Bump version and set IMAGE_TAG
+      id: versioning
+      run: |
+        git fetch --tags
+        TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v1.0.0")
+        VERSION=${TAG#v}
+        IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+        PATCH=$((PATCH + 1))
+        NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+        echo "IMAGE_TAG=${NEW_VERSION}" >> $GITHUB_ENV
+        echo "tag=${NEW_VERSION}" >> $GITHUB_OUTPUT
+
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git tag $NEW_VERSION
+        git push origin $NEW_VERSION
+
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -60,8 +78,8 @@ jobs:
         context: . # repo path
         file: ./Dockerfile # repo file path
         push: true
-        tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:latest
-
+        tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        
     - name: Save Docker version info to file
       run: echo "${{ env.IMAGE_TAG }}" > docker-version.txt
 
