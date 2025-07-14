@@ -4,17 +4,14 @@ on:
   push:
     branches: 
       - main
-      - k8s
       - daniel-modernization
   pull_request:
     branches: 
       - main
-      - k8s
       - daniel-modernization
 
 env:
   IMAGE_NAME: portfolio
-  GO_VERSION: '1.22'
 
 jobs:
   test:
@@ -24,32 +21,31 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
+    - name: Set up python
+      uses: actions/setup-python@v4
       with:
-        go-version: ${{ env.GO_VERSION }}
+        python-version: '3.12'
     
     - name: Get dependencies
       working-directory: ./app
-      run: go mod download
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app/requirements.txt
     
     - name: Run tests
       working-directory: ./app
-      run: go test -v 
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app/requirements.txt
+        pytest app/
     
   build-image:
     needs: test
     runs-on: ubuntu-latest
-    environment: CI_CD
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: ${{ env.GO_VERSION }}
-    
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     
