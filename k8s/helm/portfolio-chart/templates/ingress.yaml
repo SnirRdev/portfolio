@@ -1,20 +1,20 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
-kind: Ingress                   
+kind: Ingress
 metadata:
-  name: main-ingress         
-  annotations:
-    # לדוגמה, עבור NGINX Ingress Controller:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
+  name: portfolio-app
+  labels:
+    app: portfolio-app
 spec:
   rules:
-  - host: myapp.portfolio.com
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: /myapp/*                 
-        pathType: Prefix        
+      - path: /
+        pathType: Prefix
         backend:
           service:
-            name: my-app-service 
+            name: portfolio-app
             port:
-              number: 8080      # ingress looks for this port
-
+              number: {{ .Values.service.port }}
+{{- end }}

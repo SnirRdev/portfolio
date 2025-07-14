@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-app-service
+  name: portfolio-app
+  labels:
+    app: portfolio-app
 spec:
-  selector:
-    app: go-app
+  type: {{ .Values.service.type }}
   ports:
-    - protocol: TCP
-      port: 80        # Service port for ingress
-      targetPort: 8080  # Container port 
-  type: LoadBalancer
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.app.port }}
+      protocol: TCP
+  selector:
+    app: portfolio-app

@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app-deployment  # שם ה-Deployment
+  name: portfolio-app
   labels:
-    app: main           # לייבל שניתן להשתמש בו לזיהוי
+    app: portfolio-app
 spec:
-  replicas: 3             # מספר הפודים (Pods) שנרצה להריץ
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: main         # חייב להתאים ללייבל של הפודים
+      app: portfolio-app
   template:
     metadata:
       labels:
-        app: main       # לייבל עבור הפוד
+        app: portfolio-app
     spec:
       containers:
-      - name: main-container # שם הקונטיינר
-        image: nginx:latest  # תמונת הדוקר של האפליקציה (ניתן לשנות)
+      - name: portfolio-app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
-        - containerPort: 8080   # הפורט שהאפליקציה מאזינה לו בתוך הקונטיינר
+        - containerPort: {{ .Values.app.port }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}

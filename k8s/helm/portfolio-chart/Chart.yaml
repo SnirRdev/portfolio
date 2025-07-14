@@ -1,4 +1,3 @@
-# Chart.yaml
 apiVersion: v2
 name: portfolio-chart
 description: A Helm chart for my portfolio application

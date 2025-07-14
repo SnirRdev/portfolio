@@ -1,21 +1,32 @@
-replicaCount: 3
+# Simple values for portfolio application
 
+# Container image
 image:
-  repository: your-dockerhub-username/my-app
-  tag: 1.0.0
-  pullPolicy: IfNotPresent
+  repository: snirrdev/portfolio
+  tag: latest
 
+# Application settings
+app:
+  port: 8080
+
+# Service configuration
 service:
-  type: LoadBalancer 
-  port: 8080      
+  type: ClusterIP
+  port: 8080
 
+# Ingress (disabled by default for simplicity)
 ingress:
-  enabled: true             
-  className: nginx          
-  host: myapp.portfolio.com   
-  annotations: {}           
+  enabled: false
+  host: portfolio.local
 
-resources: {}
-nodeSelector: {}
-tolerations: []
-affinity: {}
+# Resource limits
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Number of replicas
+replicaCount: 2
