@@ -4,4 +4,3 @@ supabase
 python-dotenv
 flake8
 bandit
-black
