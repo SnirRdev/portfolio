@@ -5,7 +5,7 @@ RUN addgroup -S appuser && adduser -S appuser -G appuser
 WORKDIR /app
 
 COPY --chown=appuser:appuser ./app /app
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 USER appuser
 

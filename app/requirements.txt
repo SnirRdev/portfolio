@@ -2,3 +2,4 @@ flask
 gunicorn
 supabase
 python-dotenv
+pytest
