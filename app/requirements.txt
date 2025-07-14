@@ -2,4 +2,6 @@ flask
 gunicorn
 supabase
 python-dotenv
-pytest
+flake8
+bandit
+black
