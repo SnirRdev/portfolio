@@ -37,12 +37,6 @@ jobs:
       working-directory: ./app
       run: go test -v 
     
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./app/coverage.txt
-        fail_ci_if_error: true
-
   build-image:
     needs: test
     runs-on: ubuntu-latest
