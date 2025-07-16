@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name:   {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:latest" #latest until figure how to auto version it
         ports:
         - containerPort: {{ .Values.app.port }}
         resources:

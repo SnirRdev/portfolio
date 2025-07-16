@@ -8,16 +8,17 @@ image:
 
 # App-specific settings
 app:
-  port: 8080
+  port: 5000
 
 # Kubernetes Deployment
 replicaCount: 2
 
 # Kubernetes Service
 service:
+  name: portfolio-app
   type: ClusterIP
-  port: 8080
-
+  port: 5000
+  
 # Ingress
 ingress:
   enabled: true

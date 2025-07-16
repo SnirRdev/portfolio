@@ -22,13 +22,17 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $.Chart.Name }}
+                name: {{- if and .Values.service (hasKey .Values.service "name") -}}
+                  {{ .Values.service.name }}
+                {{- else -}}
+                  {{ .Chart.Name }}
+                {{- end }}
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ .Values.service.port }}
           {{- end }}
     {{- end }}
-  {{- if .Values.ingress.tls }}
-  tls:
-    {{- toYaml .Values.ingress.tls | nindent 4 }}
+  # {{- if .Values.ingress.tls }}
+  # tls:
+  #   {{- toYaml .Values.ingress.tls | nindent 4 }} # tls disabled for now
   {{- end }}
 {{- end }}
