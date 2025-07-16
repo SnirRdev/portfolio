@@ -1,0 +1,1 @@
+`helm push portfolio-chart-<version>.tgz oci://docker.io/daninur`
