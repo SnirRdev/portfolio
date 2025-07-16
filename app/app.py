@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello from CI/CD Test App v1!"
+    return "Hello from CI/CD Test App v2!"
 
 
 if __name__ == "__main__":
