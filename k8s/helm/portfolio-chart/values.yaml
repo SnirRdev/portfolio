@@ -1,3 +1,6 @@
+# Default namespace
+namespace: portfolio-app
+
 # Image details
 image:
   repository: snirrdev/portfolio
@@ -21,7 +24,7 @@ ingress:
   className: nginx
   annotations: {}
   hosts:
-    - host: portfolio.local
+    - host: portfolio.app.local
       paths:
         - path: /
           pathType: Prefix
