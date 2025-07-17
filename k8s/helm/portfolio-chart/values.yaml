@@ -16,7 +16,7 @@ replicaCount: 2
 # Kubernetes Service
 service:
   name: portfolio-app
-  type: ClusterIP
+  type: LoadBalancer
   port: 5000
   
 # Ingress
@@ -39,3 +39,14 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+
+# Database configuration
+postgresql:
+  auth:
+    username: portfolio_user
+    password: portfolio_pass
+    database: portfolio_db
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
