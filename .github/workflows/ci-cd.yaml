@@ -16,20 +16,21 @@ env:
   IMAGE_NAME: portfolio
 
 jobs:
-  gitleaks-scan:
-    name: Gitleaks Secrets Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  # gitleaks-scan: # this all section will be added once license is added
+  #   name: Gitleaks Secrets Scan
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
 
-      - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          fail: true                   # failing ci if secrets are found
-          # config-path: .gitleaks.toml  # optional configuration file and its path
+  #     - name: Run Gitleaks
+  #       uses: gitleaks/gitleaks-action@v2
+  #       with:
+  #         fail: true                   # failing ci if secrets are found
+  #         # config-path: .gitleaks.toml  # optional configuration file and its path
   test:
     name: Run Tests
+    # needs: gitleaks-scan # as this is an organization repo, we need lisence for gitleaks, whenever fixed this will be applied. for now it runs sepratly
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
