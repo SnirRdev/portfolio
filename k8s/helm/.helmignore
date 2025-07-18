@@ -1,0 +1,17 @@
+# Patterns to ignore when packaging Helm charts.
+.DS_Store
+
+# Common VCS directories
+.git/
+.gitignore
+.bzr/
+.bzrignore
+.hg/
+.hgignore
+.svn/
+
+# Common backup files
+*.swp
+*.bak
+*.tmp
+*~
