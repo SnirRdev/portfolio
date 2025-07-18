@@ -1,0 +1,52 @@
+# Default namespace
+namespace: portfolio-app
+
+# Image details
+image:
+  repository: snirrdev/portfolio
+  tag: "1.0.3"  # Use Git SHA or version
+
+# App-specific settings
+app:
+  port: 5000
+
+# Kubernetes Deployment
+replicaCount: 2
+
+# Kubernetes Service
+service:
+  name: portfolio-app
+  type: LoadBalancer
+  port: 5000
+  
+# Ingress
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: portfolio.app.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# Resource Limits
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Database configuration
+postgresql:
+  auth:
+    username: portfolio_user
+    password: portfolio_pass
+    database: portfolio_db
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi

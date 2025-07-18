@@ -1,6 +1,6 @@
 # 🌐 Portfolio Web App
 
-A simple portfolio web application built with **Go**, styled with **HTML/CSS**, containerized using **Docker**, and deployed to **Kubernetes** using **Helm**. CI/CD is handled via **GitHub Actions**, and optionally managed via **ArgoCD**.
+A simple portfolio web application built with **Go**, styled with **HTML/CSS**, containerized using **Docker**, and deployed to **Kubernetes** using **Helm**.
 
 ---
 
@@ -13,12 +13,10 @@ portfolio/
 │ ├── data.json # JSON file containing portfolio data
 │ ├── static/ # Static files (CSS, images)
 │ └── templates/ # HTML templates
-├── helm/
-│ └── portfolio-chart/ # Helm chart for Kubernetes deployment
-│ ├── templates/
-│ └── values.yaml
 ├── k8s/
-│ └── argo-app.yaml # Argo CD application definition (GitOps)
+│ ├── helm/portfolio-chart/ # Helm chart for Kubernetes deployment
+│ ├── deploy.sh # Simple deployment script
+│ └── README.md # Kubernetes deployment guide
 ├── .github/workflows/
 │ └── ci-cd.yaml # GitHub Actions CI/CD pipeline
 └── README.md # Project documentation
@@ -31,7 +29,6 @@ portfolio/
 - 🐳 Containerized with Docker
 - ☸️ Deployable to Kubernetes using Helm
 - 🔁 CI/CD pipeline with GitHub Actions
-- 📦 GitOps ready with ArgoCD
 
 ---
 
@@ -43,7 +40,6 @@ portfolio/
 - [Docker](https://www.docker.com/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Helm](https://helm.sh/)
-- (Optional) [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 
 ---
 
@@ -52,14 +48,74 @@ portfolio/
 ```bash
 cd app
 go run main.go
-Then open http://localhost:8080
+# Then open http://localhost:8080
+```
 
-🐳 Docker
-Build the Docker image:
-bash
-Copy code
+### 🐳 Running with Docker
+
+```bash
+# Build the Docker image
 docker build -t portfolio-app ./app
-Run the container:
-bash
-Copy code
+
+# Run the container
 docker run -p 8080:8080 portfolio-app
+```
+
+---
+
+## ☸️ Kubernetes Deployment
+
+### Quick Deploy
+
+```bash
+cd k8s
+./deploy.sh
+```
+
+### Access the Application
+
+```bash
+kubectl port-forward svc/portfolio-portfolio-chart 8080:8080 -n portfolio
+# Open http://localhost:8080
+```
+
+For more details, see [k8s/README.md](k8s/README.md).
+
+---
+
+## 🔄 CI/CD Pipeline
+
+The GitHub Actions pipeline automatically:
+- Runs tests
+- Builds Docker image
+- Pushes to Docker Hub
+
+---
+
+## 🛠️ Development
+
+### Building the Application
+
+```bash
+cd app
+go build -o portfolio main.go
+```
+
+### Running Tests
+
+```bash
+cd app
+go test -v
+```
+
+### Building Docker Image
+
+```bash
+docker build -t snirrdev/portfolio:latest ./app
+```
+
+### Pushing to Registry
+
+```bash
+docker push snirrdev/portfolio:latest
+```
