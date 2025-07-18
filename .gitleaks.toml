@@ -1,0 +1,100 @@
+# gitleaks config file
+title = "Gitleaks Security Config"
+
+# How to redact secrets in output
+redact = true
+
+# Global allowlists (ignore patterns, file paths, etc.)
+[allowlist]
+# Ignore test files
+files = [
+  ".*\\.test\\.js$",
+  ".*\\.spec\\.ts$",
+  "README.md",
+  "CHANGELOG.md",
+  "LICENSE",
+  "examples/",
+  "test/",
+]
+# Ignore paths (e.g., mock files, documentation)
+paths = [
+  "docs/",
+  "test_fixtures/"
+]
+# Ignore specific secret values (ONLY IF YOU ABSOLUTELY MUST)
+# regexes or hashes can be used
+values = [
+  "dummy-api-key-123",
+  "example-token"
+]
+
+# this file must specify rules
+# this are the common rules
+# =============== Rules ===============
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key ID"
+regex = '''AKIA[0-9A-Z]{16}'''
+tags = ["AWS", "key"]
+
+[[rules]]
+id = "aws-secret-key"
+description = "AWS Secret Access Key"
+regex = '''(?i)aws(.{0,20})?(secret|private)?(.{0,20})?['"][0-9a-zA-Z/+]{40}['"]'''
+tags = ["AWS", "key", "secret"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Personal Access Token"
+regex = '''ghp_[0-9a-zA-Z]{36}'''
+tags = ["GitHub", "key"]
+
+[[rules]]
+id = "slack-webhook"
+description = "Slack Incoming Webhook"
+regex = '''https://hooks.slack.com/services/T[0-9A-Z]{8}/B[0-9A-Z]{8}/[a-zA-Z0-9]{24}'''
+tags = ["Slack", "webhook"]
+
+[[rules]]
+id = "google-api-key"
+description = "Google API Key"
+regex = '''AIza[0-9A-Za-z\\-_]{35}'''
+tags = ["Google", "key"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key Block"
+regex = '''-----BEGIN( RSA)? PRIVATE KEY-----'''
+tags = ["private", "key"]
+
+[[rules]]
+id = "jwt"
+description = "JSON Web Token (JWT)"
+regex = '''eyJ[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+'''
+tags = ["JWT", "token"]
+
+[[rules]]
+id = "docker-config-auth"
+description = "Docker config.json auth field"
+regex = '''{"auths":\s*{.*"auth":\s*".*"}}'''
+tags = ["Docker", "credential"]
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key or Secret"
+regex = '''(?i)(apikey|api_key|secret|access_token|auth_token|bearer)[\s:=]+['"]?[0-9a-zA-Z\-_]{32,}['"]?'''
+tags = ["key", "generic"]
+
+[[rules]]
+id = "twilio-api-key"
+description = "Twilio API Key"
+regex = '''(?i)(twilio|twlo)[\s:=]+['"]?[a-z0-9]{32}['"]?'''
+tags = ["Twilio", "key"]
+
+[[rules]]
+id = "entropy-string"
+description = "High Entropy String (base64, secrets)"
+regex = '''(?i)[a-zA-Z0-9+/=]{40,}'''
+entropy = 4.5
+tags = ["entropy", "suspicious"]
