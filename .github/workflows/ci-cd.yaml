@@ -119,6 +119,16 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
+    - name: Scan Docker image for vulnerabilities with trivy
+      if: needs.test.outputs.should_build == 'true'
+      uses: aquasecurity/trivy-action@v0.13.1
+      with:
+        image-ref: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        format: table
+        exit-code: 0 # Do not fail build if vulnerabilities found (set to 1 if you want fail on critical)
+        ignore-unfixed: true 
+        vuln-type: os,library
+
     - name: Save Docker version to file
       if: needs.test.outputs.should_build == 'true'
       run: echo "${{ env.IMAGE_TAG }}" > docker-version.txt

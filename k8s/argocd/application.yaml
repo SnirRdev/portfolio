@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: portfolio-app
+  name: argo-portfolio-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/portfolioTeamDevops/portfolio.git
-    targetRevision: daniel-modernization
+    targetRevision: daniel-modernization # can you use HEAD for tracking always the last commit of the repo
     path: k8s/helm/portfolio-chart
     helm:
       valueFiles:
