@@ -121,7 +121,7 @@ jobs:
 
     - name: Scan Docker image for vulnerabilities with trivy
       if: needs.test.outputs.should_build == 'true'
-      uses: aquasecurity/trivy-action@latest
+      uses: aquasecurity/trivy-action@0.32.0
       with:
         image-ref: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         format: table
