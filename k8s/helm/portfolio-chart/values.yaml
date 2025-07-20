@@ -50,3 +50,10 @@ postgresql:
     persistence:
       enabled: true
       size: 1Gi
+
+env:
+  DB_HOST: "postgresql"
+  DB_PORT: "5432"
+  DB_USER: "postgres"
+  DB_PASSWORD: "postgres"
+  DB_NAME: "testdb"

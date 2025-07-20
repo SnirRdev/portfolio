@@ -10,6 +10,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 USER appuser
 
 EXPOSE 5000
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
 
 

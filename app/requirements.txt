@@ -1,6 +1,8 @@
 flask
-gunicorn
 supabase
 python-dotenv
 flake8
 bandit
+fastapi
+uvicorn
+psycopg2-binary
